@@ -11,10 +11,24 @@ public class GameStatus {
     private String name;
     private String phrase;
     private Character[] phraseState;
+    private Integer maxAttempts;
     private Integer attempts;
     private Integer failedAttempts;
     private Integer successAttempts;
     private List<Character> history;
+
+
+    public GameStatus(String name, String phrase, Integer maxAttempts) {
+        this.name = name;
+        this.phrase = phrase;
+        this.phraseState = new GameStatusHelper().preparePhraseState(phrase);
+        this.maxAttempts = maxAttempts;
+        this.successAttempts = 0;
+        this.failedAttempts = 0;
+        this.history = new ArrayList<>();
+    }
+
+
 
     public String getName() {
         return name;
@@ -72,15 +86,6 @@ public class GameStatus {
         this.history = history;
     }
 
-    public GameStatus(String name, String phrase) {
-        this.name = name;
-        this.phrase = phrase;
-        this.phraseState = new GameStatusHelper().preparePhraseState(phrase);
-        this.successAttempts = 0;
-        this.failedAttempts = 0;
-        this.history = new ArrayList<>();
-    }
-
     public boolean historyContains(char letter){
         return history.contains(letter);
     }
@@ -94,6 +99,19 @@ public class GameStatus {
 
     public void updateHistory(char letter) {
         history.add(letter);
+    }
+
+    public boolean isGameFinished() {
+        if(failedAttempts>=maxAttempts){
+            return true;
+        }
+
+        for (Character character : phraseState) {
+            if(character==null){
+                return false;
+            }
+        }
+        return true;
     }
 
 

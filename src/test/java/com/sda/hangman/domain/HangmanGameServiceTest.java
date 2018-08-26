@@ -62,11 +62,12 @@ public class HangmanGameServiceTest {
 
 
 
+
     @Test
     public void processNextLetterShouldUpdateCharacterStateWhenThereIsLetterInPhrase(){
         //given
-        GameStatus gameStatus = new GameStatus("Kuba","Anna");
-        GameStatus gameStatus2 = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus = new GameStatus("Kuba","Anna",1);
+        GameStatus gameStatus2 = new GameStatus("Kuba","Anna",1);
 
         //when
          hangmanGameService.processNextLetter('a',gameStatus);
@@ -79,8 +80,8 @@ public class HangmanGameServiceTest {
     public void processNextLetterShouldNotUpdateCharacterStateWhenThereIsNoLetterInPhrase() {
 
         //given
-        GameStatus gameStatus = new GameStatus("Kuba","Anna");
-        GameStatus gameStatus2 = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus = new GameStatus("Kuba","Anna",1);
+        GameStatus gameStatus2 = new GameStatus("Kuba","Anna",1);
 
         //when
         hangmanGameService.processNextLetter('b',gameStatus);
@@ -91,7 +92,7 @@ public class HangmanGameServiceTest {
     @Test
     public void processNextLetterShouldUpdateSuccessCharacterStateWhenThereIsLetterInPhrase(){
         //given
-        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus = new GameStatus("Kuba","Anna",1);
         //when
         hangmanGameService.processNextLetter('a',gameStatus);
         //then
@@ -100,7 +101,7 @@ public class HangmanGameServiceTest {
     @Test
     public void processNextLetterShouldUpdateFailureCharacterStateWhenThereIsNoLetterInPhrase(){
         //given
-        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus = new GameStatus("Kuba","Anna",1);
         //when
         hangmanGameService.processNextLetter('b',gameStatus);
         //then
@@ -109,7 +110,7 @@ public class HangmanGameServiceTest {
     @Test
     public void processNextLetterShouldUpdateHistoryForNewLetter(){
         //given
-        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus = new GameStatus("Kuba","Anna",1);
         //when
         hangmanGameService.processNextLetter('a',gameStatus);
         //then

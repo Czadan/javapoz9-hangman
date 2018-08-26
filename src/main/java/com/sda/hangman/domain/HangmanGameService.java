@@ -23,7 +23,7 @@ public class HangmanGameService {
     }
 
     public GameStatus createGameStatus(String name, String phrase){
-        return new GameStatus(name,phrase);
+        return new GameStatus(name,phrase,5);
     }
 
 
