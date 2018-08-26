@@ -1,5 +1,7 @@
 package com.sda.hangman;
 
+import com.sda.hangman.domain.HangmanGameService;
+import com.sda.hangman.domain.model.GameStatus;
 import com.sda.hangman.domain.port.PhraseRepository;
 import com.sda.hangman.infrastructure.memory.InMemoryPhraseRepository;
 
@@ -9,8 +11,10 @@ public class Application {
 
     private static Scanner scanner;
     private static PhraseRepository phraseRepository;
+    private static HangmanGameService hangmanGameService;
 
     public static void main(String[] args) {
+        hangmanGameService = new HangmanGameService();
         phraseRepository = new InMemoryPhraseRepository();
         scanner = new Scanner(System.in);
         boolean menuFlag = true;
@@ -39,6 +43,15 @@ public class Application {
         String name = scanner.nextLine();
         System.out.println("Kliknij enter zeby zaczac gre");
         String phrase = phraseRepository.getPhrase();
+        GameStatus gameStatus = hangmanGameService.createGameStatus(name, phrase);
+
+        while (true){
+            System.out.println("tutaj bedzie fraza, (pozostalo 5 prób");
+            System.out.println("podaj kolejna litere:  ");
+            char letter = scanner.nextLine().charAt(0);
+            hangmanGameService.processNextLetter(letter,gameStatus);
+
+        }
 
     }
 }

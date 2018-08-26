@@ -1,14 +1,17 @@
 package com.sda.hangman.domain;
 
+import com.sda.hangman.domain.model.GameStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HangmanGameServiceTest {
 
     private HangmanGameService hangmanGameService;
+
 
     @Before
     public void init(){
@@ -57,7 +60,62 @@ public class HangmanGameServiceTest {
 
     }
 
-    //given
-    //when
-    //then
+
+
+    @Test
+    public void processNextLetterShouldUpdateCharacterStateWhenThereIsLetterInPhrase(){
+        //given
+        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus2 = new GameStatus("Kuba","Anna");
+
+        //when
+         hangmanGameService.processNextLetter('a',gameStatus);
+
+        //then
+        Assert.assertNotEquals(gameStatus2.getPhraseState() , gameStatus.getPhraseState());
+
+    }
+    @Test
+    public void processNextLetterShouldNotUpdateCharacterStateWhenThereIsNoLetterInPhrase() {
+
+        //given
+        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        GameStatus gameStatus2 = new GameStatus("Kuba","Anna");
+
+        //when
+        hangmanGameService.processNextLetter('b',gameStatus);
+
+        //then
+        Assert.assertArrayEquals(gameStatus2.getPhraseState() , gameStatus.getPhraseState());
+    }
+    @Test
+    public void processNextLetterShouldUpdateSuccessCharacterStateWhenThereIsLetterInPhrase(){
+        //given
+        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        //when
+        hangmanGameService.processNextLetter('a',gameStatus);
+        //then
+        Assert.assertEquals(1,gameStatus.getSuccessAttempts().intValue());
+    }
+    @Test
+    public void processNextLetterShouldUpdateFailureCharacterStateWhenThereIsNoLetterInPhrase(){
+        //given
+        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        //when
+        hangmanGameService.processNextLetter('b',gameStatus);
+        //then
+        Assert.assertEquals(1,gameStatus.getFailedAttempts().intValue());
+    }
+    @Test
+    public void processNextLetterShouldUpdateHistoryForNewLetter(){
+        //given
+        GameStatus gameStatus = new GameStatus("Kuba","Anna");
+        //when
+        hangmanGameService.processNextLetter('a',gameStatus);
+        //then
+        Assert.assertEquals(1,gameStatus.getHistory().size());
+    }
+
+
+
 }
